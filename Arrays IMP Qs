@@ -180,3 +180,102 @@ public static int majority(int[] arr){
     System.out.print(ele1 +" " + ele2);
     return ;
 }
+
+```````MINIMUM CONSECCUTIVE FLIPS````
+
+public static void printGroups(int arr[], int n){
+    for(int i = 1; i < n; i++){
+		if(arr[i] != arr[i - 1]){
+    		if(arr[i] != arr[0])
+                System.out.print("From " + i + " to ");
+    		else
+                System.out.println(i - 1);
+    		}
+    	}
+    if(arr[n - 1] != arr[0])
+        System.out.println(n-1);
+}
+
+`````FIND SUBARRAY WITH GIVEN SUM``````
+
+public static void subarray(int[] arr,int sum){
+    int curr_sum = arr[0];
+    int start = 0;
+    for(int i=1;i<=arr.length;i++){
+        while(curr_sum > sum && start<i-1){
+            curr_sum -= arr[start];
+            start++;
+        }
+        if(curr_sum==sum){
+            System.out.print("sum found b/w" + start +"-"+i-1);
+        }
+        if(i<arr.length){
+            curr_sum += arr[i];
+        }
+    }
+    return ;
+}
+
+````````NBONACCISERIES```````
+
+public static void nbonacci(int n,int m){
+    int[] arr = new int[m];
+    arr[n-1] = 1;
+    arr[n] = 1;
+    for(int i=n+1;i<m;i++){
+        arr[i] = 2*arr[i-1] - arr[i-n-1];
+    }
+}
+
+`````````MAXIMUM OCCURING ELEMENT``````
+
+public static int maxoccuring(int[] left,int[] right){
+    int[] arr = new int[1000];
+    for(int i=0;i<left.length;i++){
+        arr[left[i]]++;
+        arr[right[i]+1]--;
+    }
+    int maxm = arr[0],res = 0;
+    for(int i=1;i<1000;i++){
+        arr[i] += arr[i-1];
+        if(arr[i]>maxm){
+            maxm = arr[i];
+            res = i;
+        }
+    }
+    return res;
+}
+
+``````````EQUILIBRIUM POINT`````````
+
+public static int eqbpoint(int[] arr){
+    int sum = 0;
+    for(int i=0;i<arr.length;i++){
+        sum += arr[i];
+    }
+    int lsum = 0;
+    for(int i=0;i<arr.length;i++){
+        if(lsum == sum-arr[i]){
+            return i;
+        }
+        lsum += arr[i];
+        sum -= arr[i];
+    }
+    return -1;
+}
+
+````````MAXIMUM SUM OF K CONSECUTIVE ELEMENTS```````
+
+public static int maxsum(int[] arr,int k){
+    int sum = 0;
+    for(int i=0;i<k;i++){
+        sum += arr[i];
+    }
+    int maxsum = sum;
+    for(int i=k;i<arr.length;i++){
+        sum += arr[i]-arr[i-k];
+        maxsum = Math.max(maxsum,sum);
+    }
+    return maxsum;
+}
+
