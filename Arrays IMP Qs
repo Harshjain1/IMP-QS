@@ -403,4 +403,25 @@ public static int maxsum(int[] arr,int k){
     }
   }
   
-  
+   ``````````````ROTATE A NUMBER`````````
+
+  public static int rotateanumber(int n,int r){
+      int mul = 1;
+      int div = 1;
+      int len = countdigits(n);
+      r %= len;
+      if(r<0){
+          r += len;
+      }
+      for(int i=1;i<=len;i++){
+          if(i<=r){
+              div *= 10;
+          }
+          else{
+              mul *= 10;
+          }
+      }
+      int a = n/div;
+      int b = n%div;
+      return b*mul + a;
+  }
