@@ -394,3 +394,13 @@ public static int maxsum(int[] arr,int k){
             k--;
         }
     }
+    
+  ```````````BENJAMIN BULBS`````````
+
+  public static void benjaminBulbs(int n){
+    for(int i=1;i*i<=n;i++){
+        System.out.print(i*i);
+    }
+  }
+  
+  
