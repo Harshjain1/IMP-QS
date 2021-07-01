@@ -1,0 +1,338 @@
+    ```````````PREORDER TRAVERSAL`````````
+    
+    public static void preorder(Node root){
+        if(root==null){
+            return ;
+        }
+        System.out.print(root.data+" ");
+        inorder(root.left);
+        inorder(root.right);
+    }
+    
+    ````````````INORDER TRAVERSAL``````````
+    
+    public static void inorder(Node root){
+        if(root==null){
+            return ;
+        }
+        inorder(root.left);
+        System.out.print(root.data+" ");
+        inorder(root.right);
+    }
+    
+    ```````````POSTORDER TRAVERSAL`````````
+    
+    public static void postorder(Node root){
+        if(root==null){
+            return ;
+        }
+        postorder(root.left);
+        postorder(root.right);
+        System.out.print(root.data);
+    }
+    
+    ````````````HEIGHT OF A TREE```````````
+    
+    public static int height(Node root){
+        if(root==null){
+            return -1;
+        }
+        int lh = height(root.left);
+        int rh = height(root.right);
+        return Math.max(lh,rh)+1;
+    }
+    
+    ````````````DIAMETER OF A TREE```````````
+    
+    public static int diameter(Node root){
+        if(root==null){
+            return 0;
+        }
+        int dia1 = height(root.left)+height(root.right)+2;
+        int dia2 = diameter(root.left);
+        int dia3 = diameter(root.right);
+        return Math.max(dia1,Math.max(dia2,dia3));
+    }
+    
+    static int dia = 0;
+    
+    public static int diameter(Node root){
+        if(root==null){
+            return -1;
+        }
+        int lh = diameter(root.left);
+        int rh = diameter(root.right);
+        dia = Math.max(dia,lh+rh+2);
+        return Math.max(lh,rh)+1;
+    }
+    
+    ```````````BALANCED BINARY TREE```````
+    
+    public static boolean isBalanced(Node root){
+        if(root==null){
+            return true;
+        }
+        int lh = height(root.left);
+        int rh = height(root.right);
+        if(Math.abs(lh-rh)>1){
+            return false;
+        }
+        else{
+            return isBalanced(root.left) && isBalanced(root.right);
+        }
+    }
+    
+    public static int isbalanced(Node root){
+        if(root==null){
+            return 0;
+        }
+        int lh = isbalanced(root.left);
+        int rh = isbalanced(root.right);
+        if(Math.abs(lh-rh)>1){
+            return -1;
+        }
+        else{
+            return Math.max(lh,rh)+1;
+        }
+    }
+    
+    ````````LEVEL ORDER TRAVERSAL LINE BY LINE```````
+    
+    public static void levelOrder(Node root){
+        if(root==null){
+            return ;
+        }
+        Queue<Node> qu = new LinkedList<>();
+        qu.add(root);
+        while(qu.size()>0){
+            int count = qu.size();
+            for(int i=0;i<count;i++){
+                Node curr = qu.remove();
+                System.out.print(curr.data+" ");
+                if(curr.left!=null){
+                    qu.add(curr.left);
+                }
+                if(curr.right!=null){
+                    qu.add(curr.right);
+                }
+            }
+            System.out.println();
+        }
+    }
+    
+    `````````LEFT VIEW OF BINARY TREE```````
+    
+    public static void leftview(Node root){
+        if(root==null){
+            return ;
+        }
+        Queue<Node> qu = new LinkedList<>();
+        qu.add(root);
+        while(qu.size()>0){
+            int count = qu.size();
+            for(int i=0;i<count;i++){
+                Node curr = qu.remove();
+                if(i==0){
+                    System.out.print(curr.data+" ");
+                }
+                if(curr.left!=null){
+                    qu.add(curr.left);
+                }
+                if(curr.right!=null){
+                    qu.add(curr.right);
+                }
+            }
+        }
+    }
+    
+    `````````RIGHT VIEW OF BINARY TREE```````
+    
+    public static void rightview(Node root){
+        if(root==null){
+            return ;
+        }
+        Queue<Node> qu = new LinkedList<>();
+        qu.add(root);
+        while(qu.size()>0){
+            int count = qu.size();
+            for(int i=0;i<count;i++){
+                Node curr = qu.remove();
+                if(i==count-1){
+                    System.out.print(curr.data+" ");
+                }
+                if(curr.left!=null){
+                    qu.add(curr.left);
+                }
+                if(curr.right!=null){
+                    qu.add(curr.right);
+                }
+            }
+        }
+    }
+    
+    ``````````CHILDREN SUM PROPERTY`````````
+    
+    public static boolean childrensum(Node root){
+        if(root==null){
+            return true;
+        }
+        if(root.left==null && root.right==null){
+            return true;
+        }
+        int sum = 0;
+        if(root.left!=null){
+            sum += root.left.data;
+        }
+        if(root.right!=null){
+            sum += root.right.data;
+        }
+        return sum==root.data && childrensum(root.left) && childrensum(root.right);
+    }
+    
+    ```````CONVERT BINARY TREE TO DOUBLY LINKED LIST```
+    
+    public static Node BTtoDLL(Node root){
+        if(root==null){
+            return null;
+        }
+        Node head = BTtoDLL(root.left);
+        if(prev==null){
+            head = root;
+        }
+        else{
+            prev.right = root;
+            root.left = prev;
+        }
+        prev = root;
+        BTtoDLL(root.right);
+        return head;
+    }
+    
+    ```````CONSTRUCT BINARY TREE FROM INORDER AND PREORDER`````
+    
+    public static Node fromtree(int[] in,int[] pre){
+        int n = in.length;
+        preidx = 0;
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        for(int i=0;i<n;i++){
+            mp.put(in[i],i);
+        }
+        Node root = construct(pre,mp,0,n-1);
+        return root;
+    }
+    
+    static int preidx ;
+    
+    public static Node construct(int[] pre,HashMap<Integer,Integer> mp,int st,int ei){
+        if(si>ei){
+            return null;
+        }
+        Node root = new Node(pre[preidx++]);
+        int idx = mp.get(root.data);
+        root.left = construct(pre,mp,st,idx-1);
+        root.right = construct(pre,mp,idx+1,ei);
+        return root;
+    }
+    
+    ```````CONSTRUCT BINARY TREE FROM INORDER AND POSTORDER`````
+    
+    public static Node fromtree(int[] in,int[] post){
+        postidx = post.length-1;
+        HashMap<Integer,Integer> mp = new HashMap<>();
+        for(int i=0;i<post.length;i++){
+            mp.put(in[i],i);
+        }
+        Node root = construct(in,mp,0,post.length-1);
+        return root;
+    }
+    
+    static int postidx ;
+    
+    public static Node construct(int[] post,HashMap<Integer,Integer> mp,int st,int ei){
+        if(si>ei){
+            return null;
+        }
+        Node root = new Node(post[postidx--]);
+        int idx = mp.put(root.data);
+        root.right = construct(post,mp,idx+1,ei);
+        root.left = construct(post,mp,si,idx-1);
+        return root;
+    }
+    
+    ````````COUNT NODES IN A COMPLETE BINARY TREE``````
+    
+    public static int countNodes(Node root){
+        if(root==null){
+            return 0;
+        }
+        int lh = 0;
+        Node temp = root;
+        while(temp!=null){
+            lh++;
+            temp = temp.left;
+        }
+        int rh = 0;
+        temp = root;
+        while(temp!=null){
+            rh++;
+            temp = temp.right;
+        }
+        if(lh==rh){
+            return (int)Math.pow(2,lh)-1;
+        }
+        else{
+            return 1+countNodes(root.left)+countNodes(root.right);
+        }
+    }
+    
+    `````````LCA OF A BINARY TREE```````
+    
+    public static Node LCA(Node root,int n1,int n2){
+        if(root==null){
+            return null;
+        }
+        if(root.key==n1 || root.key==n2){
+            return root;
+        }
+        int lres = LCA(root.left,n1,n2);
+        int rres = LCA(root.right,n1,n2);
+        if(lres!=null && rres!=null){
+            return root;
+        }
+        if(lres!=null){
+            return lres;
+        }
+        else{
+            return rres;
+        }
+    }
+    
+    ``````SERIALIZE AND DESERIALIZE A BINARY TREE`````
+    
+    static int EMPTY = -1;
+    public static void serialize(Node root,ArrayList<Integer> res){
+        if(root==null){
+            res.add(EMPTY);
+            return ;
+        }
+        res.add(root.data);
+        serialize(root.left,res);
+        serialize(root.right,res);
+    }
+    
+    static int idx = 0;
+    public static Node deserialize(ArrayList<Integer> res){
+        if(idx==res.size()){
+            return null;
+        }
+        int val = res.get(idx++);
+        if(val==-1){
+            return null;
+        }
+        Node root = new Node(val);
+        root.left = deserialize(res);
+        root.right = deserialize(res);
+        return root;
+    }
+   
+   
