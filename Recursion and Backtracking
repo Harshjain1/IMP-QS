@@ -1,0 +1,187 @@
+->flood fill
+
+public static void floodfill(int[][] maze, int sr, int sc, String asf) {
+    if(sr<0 || sr>= maze.length || sc<0 || sc>=maze[0].length || maze[sr][sc]==1){
+        return ;
+    }
+    if(sr==maze.length-1 && sc==maze[0].length-1){
+        System.out.println(asf);
+        return ;
+    }
+    maze[sr][sc]=1;
+    floodfill(maze,sr-1,sc,asf+"t");
+    floodfill(maze,sr,sc-1,asf+"l");
+    floodfill(maze,sr+1,sc,asf+"d");
+    floodfill(maze,sr,sc+1,asf+"r");
+    maze[sr][sc]=0;
+}
+
+->n queen
+public static void printNQueens(int[][] chess, String qsf, int row) {
+    if(row==chess.length){
+        System.out.println(qsf+".");
+        return ;
+    }    
+    for(int col=0;col<chess[0].length;col++){
+        if(isvalid(chess,row,col)==true){
+            chess[row][col]=1;
+            printNQueens(chess,qsf+row+"-"+col+",",row+1);
+            chess[row][col]=0;
+        }
+    }
+}
+
+public static boolean isvalid(int[][] chess,int row,int col){
+    for(int i=row-1;i>=0;i--){
+        if(chess[i][col]==1){
+            return false;
+        }
+    }
+    for(int i=row-1,j=col-1;i>=0 && j>=0;i--,j--){
+        if(chess[i][j]==1){
+            return false;
+        }
+    }
+    for(int i=row-1,j=col+1;i>=0 && j<chess.length;i--,j++){
+        if(chess[i][j]==1){
+            return false;
+        }
+    }
+    return true;
+}
+
+->solve soduku
+public static void solvesoduku(int[][] board,int i,int j){
+    if(i==board.length){
+        print(board);
+        return ;
+    }
+    int ni=0;
+    int nj=0;
+    
+    if(j==board[0].length-1){
+        ni=i+1;
+        nj=0;
+    }
+    else{
+        ni=i;
+        nj=j+1;
+    }
+    if(board[i][j]==0){
+        for(int po=1;po<=9;po++){
+            if(isvalid(board,i,j,po)==true){
+                board[i][j]=i;
+                solvesoduku(board,nj,nj);
+                board[i][j]=0;
+            }
+        }
+    }
+    else{
+        solvesoduku(board,ni,nj);
+    }
+    return ;
+}
+public static boolean isvalid(int[][] board,int x,int y,int val){
+    for(int j=0;j<board[0].length;j++){
+        if(board[x][j]==val){
+            return false;
+        }
+    }
+    for(int i=0;i<board.length;i++){
+        if(board[i][y]==val){
+            return false;
+        }
+    }
+    int smi = (x/3)*3;
+    int smj = (y/3)*3;
+    for(int i=0;i<3;i++){
+        for(int j=0;j<3;j++){
+            if(board[smi+i][smj+j]==val){
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+->check valid soduku
+public boolean isValidSudoku(char[][] board) {
+        
+        HashSet visited = new HashSet();
+        
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(board[i][j]!='.'){
+                    if(!visited.add("row"+i+board[i][j])){
+                        return false;
+                    }
+                    else if(!visited.add("col"+j+board[i][j])){
+                        return false;
+                    }
+                    else if(!visited.add("box"+(i/3)*3+j/3+board[i][j])){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+->tower of hanoi
+public static void toh(int n, int t1id, int t2id, int t3id){
+        if(n==0)
+        {
+            return ;
+        }
+        toh(n-1,t1id,t3id,t2id);
+        System.out.println(n + "["+ t1id +" -> "+ t2id +"]");
+        toh(n-1,t3id,t2id,t1id);
+}    
+
+->knight tour
+public static void printKnightsTour(int[][] chess, int r, int c, int move) {
+    if(r<0 || r>=chess.length || c<0 || c>=chess[0].length || chess[r][c]>0){
+        return ;
+    }
+    else if(move==chess.length*chess.length){
+        chess[r][c]=move;
+        printboard(chess);
+        chess[r][c]=0;
+        return ;
+    }
+    chess[r][c]=move;
+    printKnightsTour(chess,r-2,c+1,move+1);
+    printKnightsTour(chess,r-1,c+2,move+1);
+    printKnightsTour(chess,r+1,c+2,move+1);
+    printKnightsTour(chess,r+2,c+1,move+1);
+    printKnightsTour(chess,r+2,c-1,move+1);
+    printKnightsTour(chess,r+1,c-2,move+1);
+    printKnightsTour(chess,r-1,c-2,move+1);
+    printKnightsTour(chess,r-2,c-1,move+1);
+    chess[r][c]=0;
+    return ;
+}
+
+->print permuatations
+// we always take permuatation if the items given are non identical
+// ans we were asked to print it arrangements
+public static void permutations(int[] boxes, int ci, int ti){
+    if(ci>ti){
+        for(int val : boxes){
+            System.out.print(val);
+        }
+        System.out.println();
+    }
+    
+    for(int i=0;i<boxes.length;i++){
+        if(boxes[i]==0){
+            boxes[i]=ci;
+            permutations(boxes,ci+1,ti);
+            boxes[i]=0;
+        }
+    }
+    return ;
+ }
+ 
+ ->print combination
+ // we will always take combination if the items are identical
