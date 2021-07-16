@@ -162,7 +162,7 @@ public static void printKnightsTour(int[][] chess, int r, int c, int move) {
     return ;
 }
 
-->print permuatations
+->print permuatations(Q is print possible arrangements of items in given boxes)
 // we always take permuatation if the items given are non identical
 // ans we were asked to print it arrangements
 public static void permutations(int[] boxes, int ci, int ti){
